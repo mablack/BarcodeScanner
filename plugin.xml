@@ -46,10 +46,8 @@
         <header-file src="src/ios/ZBarSDK/Headers/ZBarSDK/zbar/Window.h" />
 
         <header-file src="src/ios/ZBarScanner.h" />
-        <header-file src="src/ios/ZBarScannerController.h" />
 
         <source-file src="src/ios/ZBarScanner.m" />
-        <source-file src="src/ios/ZBarScannerController.m" />
 
         <source-file src="src/ios/ZBarSDK/libzbar.a" framework="true" />
 
