@@ -45,15 +45,6 @@
 
 - (void)scan:(CDVInvokedUrlCommand *)command {
 
-    // Check command.arguments here.
-    // [self.commandDelegate runInBackground:^{
-    //     // NSString* payload = nil;
-    //     // // Some blocking logic...
-    //     // CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:payload];
-    //     // // The sendPluginResult method is thread-safe.
-    //     // [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId]; 
-    // }];
-
     if (self.hasPendingOperation) {
         return;
     }
@@ -62,28 +53,11 @@
     self.callbackId = command.callbackId;
     [self.viewController presentModalViewController: self.reader
                             animated: YES];
-
-    
-    
-    // if (!self.reader) {
-    //     self.reader = [ZBarReaderViewController new];
-    //     self.reader.readerDelegate = self;
-    // }
-
-    // disable all symbols - useful to re-enable specific codes only
-    // [reader.scanner setSymbology: 0
-    //      config: ZBAR_CFG_ENABLE
-    //      to: 0];
-
-    // [reader.scanner setSymbology: ZBAR_QRCODE
-    //             config: ZBAR_CFG_ENABLE
-    //             to: 1];
-
-    
-    // queue [processor scanBarcode] to run on the event loop
-//    [processor performSelector:@selector(scanBarcode) withObject:nil afterDelay:0];
 }
 
+- (void)encode:(CDVInvokedUrlCommand*)command {
+    [self returnError:@"encode function not supported" callback:command.callbackId];
+}
 //--------------------------------------------------------------------------
 - (void)returnSuccess:(NSString*)scannedText format:(NSString*)format cancelled:(BOOL)cancelled callback:(NSString*)callback {
     NSNumber* cancelledNumber = [NSNumber numberWithInt:(cancelled?1:0)];
@@ -99,23 +73,19 @@
                                ];
     [self.commandDelegate sendPluginResult:result callbackId:callback];
 
-    // NSString* js = [result toSuccessCallbackString:callback];
-
-    // [self writeJavascript:js];
-
     self.hasPendingOperation = NO;
 }
 
 //--------------------------------------------------------------------------
 - (void)returnError:(NSString*)message callback:(NSString*)callback {
-//    CDVPluginResult* result = [CDVPluginResult
-//                               resultWithStatus: CDVCommandStatus_OK
-//                               messageAsString: message
-//                               ];
-//    
-//    NSString* js = [result toErrorCallbackString:callback];
-//    
-//    [self writeJavascript:js];
+   CDVPluginResult* result = [CDVPluginResult
+                              resultWithStatus: CDVCommandStatus_OK
+                              messageAsString: message
+                              ];
+   
+   NSString* js = [result toErrorCallbackString:callback];
+   
+   [self writeJavascript:js];
 }
 
 #pragma mark -
@@ -130,15 +100,8 @@
     if(!sym)
         return;
     
-    // do something with results
-//    barcode.symbol = sym;
-//    barcode.type = [NSNumber numberWithInteger: sym.type];
-//    barcode.data = sym.data;
-    
     [picker dismissModalViewControllerAnimated: YES];
 
-    // self.reader = nil;
-    
     [self returnSuccess:sym.data format:sym.typeName cancelled:FALSE callback:self.callbackId];
 }
 
