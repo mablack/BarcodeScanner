@@ -32,16 +32,26 @@ The following barcode types are currently supported:
 * RSS_EXPANDED
 
 ### iOS
+This branch uses the [ZBar SDK](http://zbar.sourceforge.net/iphone/sdkdoc/index.html) for iOS.
 
-* QR_CODE
-* DATA_MATRIX
-* UPC_E
-* UPC_A
-* EAN_8
-* EAN_13
-* CODE_128
-* CODE_39
-* ITF
+* ZBAR_EAN2        = GS1 2-digit add-on
+* ZBAR_EAN5        = GS1 5-digit add-on
+* ZBAR_EAN8        = EAN-8
+* ZBAR_UPCE        = UPC-E
+* ZBAR_ISBN10      = ISBN-10 (from EAN-13)
+* ZBAR_UPCA        = UPC-A
+* ZBAR_EAN13       = EAN-13
+* ZBAR_ISBN13      = ISBN-13 (from EAN-13)
+* ZBAR_COMPOSITE   = EAN/UPC composite
+* ZBAR_I25         = Interleaved 2 of 5
+* ZBAR_DATABAR     = GS1 DataBar (RSS)
+* ZBAR_DATABAR_EXP = GS1 DataBar Expanded
+* ZBAR_CODABAR     = Codabar
+* ZBAR_CODE39      = Code 39
+* ZBAR_PDF417      = PDF417
+* ZBAR_QRCODE      = QR Code
+* ZBAR_CODE93      = Code 93
+* ZBAR_CODE128     = Code 128
 
 `success` and `fail` are callback functions. Success is passed an object with data, type and cancelled properties. Data is the text representation of the barcode data, type is the type of barcode detected and cancelled is whether or not the user cancelled the scan.
 
