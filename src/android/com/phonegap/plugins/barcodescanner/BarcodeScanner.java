@@ -35,6 +35,7 @@ public class BarcodeScanner extends CordovaPlugin {
     private static final String TEXT = "text";
     private static final String DATA = "data";
     private static final String TYPE = "type";
+    private static final String SYMBOLS = "symbols";
     private static final String SCAN_INTENT = "com.phonegap.plugins.barcodescanner.SCAN";
     private static final String ENCODE_DATA = "ENCODE_DATA";
     private static final String ENCODE_TYPE = "ENCODE_TYPE";
@@ -96,7 +97,12 @@ public class BarcodeScanner extends CordovaPlugin {
                 return true;
             }
         } else if (action.equals(SCAN)) {
-            scan();
+            JSONObject obj = args.optJSONObject(0);
+            if (obj != null) {
+                String symbols = obj.optString(SYMBOLS);
+
+                scan(symbols);
+            }
         } else {
             return false;
         }
@@ -106,9 +112,13 @@ public class BarcodeScanner extends CordovaPlugin {
     /**
      * Starts an intent to scan and decode a barcode.
      */
-    public void scan() {
+    public void scan(String symbols) {
         Intent intentScan = new Intent(SCAN_INTENT);
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
+
+        if(symbols != null) {
+            intent.putExtra("SCAN_FORMATS", symbols);
+        }
 
         this.cordova.startActivityForResult((CordovaPlugin) this, intentScan, REQUEST_CODE);
     }
