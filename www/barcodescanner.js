@@ -29,6 +29,23 @@
                 //  CONTACT_TYPE: "CONTACT_TYPE",  // TODO:  not implemented, requires passing a Bundle class from Javascript to Java
                 //  LOCATION_TYPE: "LOCATION_TYPE" // TODO:  not implemented, requires passing a Bundle class from Javascript to Java
             };
+
+            this.Symbology = {
+                QR_CODE: "QR_CODE",
+                DATA_MATRIX: "DATA_MATRIX",
+                UPC_E: "UPC_E",
+                UPC_A: "UPC_A",
+                EAN_8: "EAN_8",
+                EAN_13: "EAN_13",
+                CODE_128: "CODE_128",
+                CODE_39: "CODE_39",
+                CODE_93: "CODE_93",
+                CODABAR: "CODABAR",
+                ITF: "ITF",
+                RSS14: "RSS14",
+                PDF417: "PDF417",
+                RSS_EXPANDED: "RSS_EXPANDED"
+            };
         };
 
         /**
@@ -41,11 +58,13 @@
          *    }
          * @param {Function} errorCallback
          */
-        BarcodeScanner.prototype.scan = function (successCallback, errorCallback) {
+        BarcodeScanner.prototype.scan = function (successCallback, errorCallback, enableSymbols) {
             if (errorCallback == null) {
                 errorCallback = function () {
                 };
             }
+
+            enableSymbols = enableSymbols || [];
 
             if (typeof errorCallback != "function") {
                 console.log("BarcodeScanner.scan failure: failure parameter not a function");
@@ -57,7 +76,9 @@
                 return;
             }
 
-            exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', []);
+            exec(successCallback, errorCallback, 'BarcodeScanner', 'scan', [
+                {'symbols': enableSymbols.join(',')}
+            ]);
         };
 
         //-------------------------------------------------------------------
