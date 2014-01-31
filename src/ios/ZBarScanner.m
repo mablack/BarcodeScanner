@@ -53,13 +53,13 @@
     // check for formats?
 
     // disable all symbols
-    // [self.reader.scanner setSymbology: 0
-    //      config: ZBAR_CFG_ENABLE
-    //      to: 0];
-    // enable QR codes
-    // [self.reader.scanner setSymbology: ZBAR_QRCODE
-    //          config: ZBAR_CFG_ENABLE
-    //          to: 1];
+    [self.reader.scanner setSymbology: 0
+         config: ZBAR_CFG_ENABLE
+         to: 0];
+    // enable code 128
+    [self.reader.scanner setSymbology: ZBAR_CODE128
+             config: ZBAR_CFG_ENABLE
+             to: 1];
     
     self.callbackId = command.callbackId;
     [self.viewController presentModalViewController: self.reader
