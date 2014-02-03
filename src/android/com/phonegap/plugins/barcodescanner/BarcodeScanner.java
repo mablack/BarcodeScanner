@@ -117,6 +117,7 @@ public class BarcodeScanner extends CordovaPlugin {
         intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
         if(symbols != null) {
+            Log.d(LOG_TAG, symbols);
             intentScan.putExtra("SCAN_FORMATS", symbols);
         }
 
